@@ -1,0 +1,1332 @@
+<html translate="no">
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Preview</title>
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+<body>
+
+  <div class="section" id="section">
+      <div class="floatLayer" id="floatLayer"></div>
+      <div id="capa1" style="z-index:2;position:absolute;top:0px;left:0px">
+      </div>
+      <div id="capa2" style="z-index:1;position:absolute;top:0px;left:0px"></div>
+    <div class="container mt-5">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="imageUploadInput" class="form-label"></label>
+                <input class="form-control h-auto" id="imageUploadInput" name="imageUploadInput" type="file" accept="image/*">
+            </div>
+        </form>
+        <div class="mySvg">
+            <svg id="mySvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 style="width: 100%; height: 100%"></svg>
+        </div>
+        <div id="imagePreviewContainer">
+        </div>
+    </div>
+  </div>
+  <iframe id="iframe" style="width: 100%; height: 100%;"></iframe>
+  <script>
+      const inputs = document.getElementById("imageUploadInput");
+      const avatar = document.getElementById("avatar");
+
+      const convertBase64 = (file) => {
+          return new Promise((resolve, reject) => {
+              const fileReader = new FileReader();
+              fileReader.readAsDataURL(file);
+
+              fileReader.onload = () => {
+                  resolve(fileReader.result);
+              };
+
+              fileReader.onerror = (error) => {
+                  reject(error);
+              };
+          });
+      };
+
+      const uploadImage = async (event) => {
+          const file = event.target.files[0];
+          const base64 = await convertBase64(file);
+          var btnElement = document.createElement("button")
+          // avatar.src = base64;
+          // textArea.innerText = base64;
+          localStorage.setItem('base64', base64)
+          var svgimg = document.createElementNS("http://www.w3.org/2000/svg", "image");
+          svgimg.setAttribute( 'width', '100%' );
+          svgimg.setAttribute( 'height', '100%' );
+
+          svgimg.setAttributeNS("http://www.w3.org/1999/xlink", 'xlink:href', base64);
+
+          btnElement.className= "btn btn-outline-primary nextBtn"
+          btnElement.addEventListener("click",function (){
+              var js = document.getElementById("iframe")
+              js.style = "display: block;"
+              document.getElementById("iframe").style = "width: 100%; height: 100%"
+              document.getElementById("iframe").src = "iframe.html";
+              document.getElementById("section").style = "display: none";
+          })
+          btnElement.innerHTML= "Next"
+
+          document.getElementById("mySvg").appendChild(svgimg);
+          document.getElementById("imagePreviewContainer").appendChild(btnElement);
+      };
+
+      inputs.addEventListener("change", (e) => {
+          uploadImage(e);
+      });
+  </script>
+
+  <script language="javascript">
+
+      var Xinicial = 0;
+      var Yinicial = 0;
+      var Anchura = 0;
+      var Altura = 0;
+      var origenX = 0;
+      var origenY = 0;
+      var canvas;
+      var i = 0;
+      var contenidotextbox;
+      //var textohtml;
+      //var nuevotextohtml;
+      //var cuadrodetexto = [];
+      //var htmlcuadros = [];
+      //var htmlcuadrossinvalue = [];
+      var contenidoaguardar = [];
+      var contenidoaguardarmenosuno = [];
+      var contenidoaguardarmenosdos = [];
+      var contenidoaguardarmenostres = [];
+      var contenidoaguardarmenoscuatro = [];
+      var contenidoaguardarmenoscinco = [];
+      var contenidoaguardarmenosseis = [];
+      var contenidoaguardarmenossiete = [];
+      var contenidoaguardarmenosocho = [];
+      var contenidoaguardarmenosnueve = [];
+      var contenidoaguardarmenosdiez = [];
+      var contenidoaguardarmasuno = [];
+      var contenidoaguardarmasdos = [];
+      var contenidoaguardarmastres = [];
+      var contenidoaguardarmascuatro = [];
+      var contenidoaguardarmascinco = [];
+      var contenidoaguardarmasseis = [];
+      var contenidoaguardarmassiete = [];
+      var contenidoaguardarmasocho = [];
+      var contenidoaguardarmasnueve = [];
+      var contenidoaguardarmasdiez = [];
+
+      var fcsdb = 999999999;
+      var ognxnt = 0;
+      var ognynt = 0;
+      var nchrgn;
+      var ltrrgn;
+      var lftrgn;
+      var tprgn;
+      var achnv;
+      var ltanv;
+      var lftnv;
+      var tpnv;
+      var rszni;
+      var csllslc = 999999999;
+      var defaultspeechsynthesizerlanguage = "";
+      var defaultspeechrecognizerlanguage = "";
+      var codigomp3subido = "";
+      var numerodecuadromp3subido = 999999999;
+      var hayerror = [];
+      var ttcdcp = "";
+      var tpcdcp = 0;
+      var lftcdcp = 0;
+      var chcdcp = 0;
+      var ltcdcp = 0;
+      var rpcdcp = "";
+      var hecdcp = 0;
+      var heelf = 0;
+
+
+      var langs =
+          [['Choose', ['choose']],
+              ['English'['en-US', 'United States']]];
+
+
+      if (localStorage.getItem("defaultfontfamily") == "" || localStorage.getItem("defaultfontfamily") === null) {
+          localStorage.setItem("defaultfontfamily", "Arial");
+      }
+      if (localStorage.getItem("defaultfontsize") == "" || localStorage.getItem("defaultfontsize") === null) {
+          localStorage.setItem("defaultfontsize", "14");
+      }
+      if (localStorage.getItem("defaultfontcolor") == "" || localStorage.getItem("defaultfontcolor") === null) {
+          localStorage.setItem("defaultfontcolor", "0000CC");
+      }
+      if (localStorage.getItem("defaultbgcolorred") == "" || localStorage.getItem("defaultbgcolorred") === null) {
+          localStorage.setItem("defaultbgcolorred", "255");
+      }
+      if (localStorage.getItem("defaultbgcolorgreen") == "" || localStorage.getItem("defaultbgcolorgreen") === null) {
+          localStorage.setItem("defaultbgcolorgreen", "255");
+      }
+      if (localStorage.getItem("defaultbgcolorblue") == "" || localStorage.getItem("defaultbgcolorblue") === null) {
+          localStorage.setItem("defaultbgcolorblue", "255");
+      }
+      if (localStorage.getItem("defaultbgopacity") == "" || localStorage.getItem("defaultbgopacity") === null) {
+          localStorage.setItem("defaultbgopacity", "0.5");
+      }
+      if (localStorage.getItem("defaultbordercolor") == "" || localStorage.getItem("defaultbordercolor") === null) {
+          localStorage.setItem("defaultbordercolor", "666666");
+      }
+      if (localStorage.getItem("defaultborderwidth") == "" || localStorage.getItem("defaultborderwidth") === null) {
+          localStorage.setItem("defaultborderwidth", "1");
+      }
+      if (localStorage.getItem("defaultroundedcorners") == "" || localStorage.getItem("defaultroundedcorners") === null) {
+          localStorage.setItem("defaultroundedcorners", "4");
+      }
+      if (localStorage.getItem("defaulttextalign") == "" || localStorage.getItem("defaulttextalign") === null) {
+          localStorage.setItem("defaulttextalign", "center");
+      }
+
+
+      function lmcncntntr() {
+
+          contenidoaguardarmenosdiez = JSON.parse(JSON.stringify(contenidoaguardarmenosnueve));
+          contenidoaguardarmenosnueve = JSON.parse(JSON.stringify(contenidoaguardarmenosocho));
+          contenidoaguardarmenosocho = JSON.parse(JSON.stringify(contenidoaguardarmenossiete));
+          contenidoaguardarmenossiete = JSON.parse(JSON.stringify(contenidoaguardarmenosseis));
+          contenidoaguardarmenosseis = JSON.parse(JSON.stringify(contenidoaguardarmenoscinco));
+          contenidoaguardarmenoscinco = JSON.parse(JSON.stringify(contenidoaguardarmenoscuatro));
+          contenidoaguardarmenoscuatro = JSON.parse(JSON.stringify(contenidoaguardarmenostres));
+          contenidoaguardarmenostres = JSON.parse(JSON.stringify(contenidoaguardarmenosdos));
+          contenidoaguardarmenosdos = JSON.parse(JSON.stringify(contenidoaguardarmenosuno));
+          contenidoaguardarmenosuno = JSON.parse(JSON.stringify(contenidoaguardar));
+
+      }
+
+
+      function dshcr() {
+
+          contenidoaguardarmasdiez = JSON.parse(JSON.stringify(contenidoaguardarmasnueve));
+          contenidoaguardarmasnueve = JSON.parse(JSON.stringify(contenidoaguardarmasocho));
+          contenidoaguardarmasocho = JSON.parse(JSON.stringify(contenidoaguardarmassiete));
+          contenidoaguardarmassiete = JSON.parse(JSON.stringify(contenidoaguardarmasseis));
+          contenidoaguardarmasseis = JSON.parse(JSON.stringify(contenidoaguardarmascinco));
+          contenidoaguardarmascinco = JSON.parse(JSON.stringify(contenidoaguardarmascuatro));
+          contenidoaguardarmascuatro = JSON.parse(JSON.stringify(contenidoaguardarmastres));
+          contenidoaguardarmastres = JSON.parse(JSON.stringify(contenidoaguardarmasdos));
+          contenidoaguardarmasdos = JSON.parse(JSON.stringify(contenidoaguardarmasuno));
+          contenidoaguardarmasuno = JSON.parse(JSON.stringify(contenidoaguardar));
+
+          contenidoaguardar = JSON.parse(JSON.stringify(contenidoaguardarmenosuno));
+          //alert(JSON.stringify(contenidoaguardar));
+          rllnrlmth();
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+
+          //}
+          if (contenidoaguardarmenosdos.length > 0) {
+              contenidoaguardarmenosuno = JSON.parse(JSON.stringify(contenidoaguardarmenosdos));
+          }
+          contenidoaguardarmenosdos = JSON.parse(JSON.stringify(contenidoaguardarmenostres));
+          contenidoaguardarmenostres = JSON.parse(JSON.stringify(contenidoaguardarmenoscuatro));
+          contenidoaguardarmenoscuatro = JSON.parse(JSON.stringify(contenidoaguardarmenoscinco));
+          contenidoaguardarmenoscinco = JSON.parse(JSON.stringify(contenidoaguardarmenosseis));
+          contenidoaguardarmenosseis = JSON.parse(JSON.stringify(contenidoaguardarmenossiete));
+          contenidoaguardarmenossiete = JSON.parse(JSON.stringify(contenidoaguardarmenosocho));
+          contenidoaguardarmenosocho = JSON.parse(JSON.stringify(contenidoaguardarmenosnueve));
+          contenidoaguardarmenosnueve = JSON.parse(JSON.stringify(contenidoaguardarmenosdiez));
+          contenidoaguardarmenosdiez = [];
+
+      }
+
+
+      function rhcr() {
+          lmcncntntr();
+          contenidoaguardar = JSON.parse(JSON.stringify(contenidoaguardarmasuno));
+          rllnrlmth();
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+
+          if (contenidoaguardarmasdos.length > 0) {
+              contenidoaguardarmasuno = JSON.parse(JSON.stringify(contenidoaguardarmasdos));
+          }
+          contenidoaguardarmasdos = JSON.parse(JSON.stringify(contenidoaguardarmastres));
+          contenidoaguardarmastres = JSON.parse(JSON.stringify(contenidoaguardarmascuatro));
+          contenidoaguardarmascuatro = JSON.parse(JSON.stringify(contenidoaguardarmascinco));
+          contenidoaguardarmascinco = JSON.parse(JSON.stringify(contenidoaguardarmasseis));
+          contenidoaguardarmasseis = JSON.parse(JSON.stringify(contenidoaguardarmassiete));
+          contenidoaguardarmassiete = JSON.parse(JSON.stringify(contenidoaguardarmasocho));
+          contenidoaguardarmasocho = JSON.parse(JSON.stringify(contenidoaguardarmasnueve));
+          contenidoaguardarmasnueve = JSON.parse(JSON.stringify(contenidoaguardarmasdiez));
+          contenidoaguardarmasdiez = [];
+      }
+
+
+      function rrgltxt(eltexto) {
+          var textvalue = eltexto;
+
+          if (textvalue.length > 0) {
+              textvalue = textvalue.split("´").join("'");
+              textvalue = textvalue.split("’").join("'");
+              textvalue = textvalue.split("‘").join("'");
+              textvalue = textvalue.split("&nbsp;").join(" ");
+              //textvalue = textvalue.split("  ").join(" ");
+              textvalue = textvalue.replace(/\s\s+/g, ' ');//sustituye espacios dobles por simples
+              //textvalue = textvalue.split("<").join("{");
+              //textvalue = textvalue.split(">").join("}");
+              textvalue = textvalue.split("/ ").join("/");
+              textvalue = textvalue.split(" /").join("/");
+              textvalue = textvalue.split("./").join("/");
+              textvalue = textvalue.split(" /").join("/");
+              textvalue = textvalue.split("/* ").join("/*");
+              textvalue = textvalue.split("'").join("$");
+              textvalue = textvalue.split('"').join("#");
+              textvalue = textvalue.split(' :').join(":");
+              textvalue = textvalue.split(' ,').join(",");
+              textvalue = textvalue.split(' .').join(".");
+              textvalue = textvalue.split(' ;').join(";");
+              textvalue = textvalue.split("  ").join(" ");
+              textvalue = textvalue.split("( ").join("(");
+              textvalue = textvalue.split(" )").join(")");
+              textvalue = textvalue.split("´").join("'");
+              textvalue = textvalue.split("’").join("'");
+              textvalue = textvalue.split("‘").join("'");
+              textvalue = textvalue.replace(/\\/g, "/");
+
+
+              // textvalue = textvalue.replace(/playmp3:/ig, 'playmp3:');
+              textvalue = textvalue.replace(/join:/ig, 'join:');
+              textvalue = textvalue.replace(/drag:/ig, 'drag:');
+              textvalue = textvalue.replace(/drop:/ig, 'drop:');
+              textvalue = textvalue.replace(/choose:/ig, 'choose:');
+              textvalue = textvalue.replace(/select:/ig, 'select:');
+              textvalue = textvalue.replace(/tick:/ig, 'tick:');
+              textvalue = textvalue.replace(/link:/ig, 'link:');
+              textvalue = textvalue.replace(/speak:/ig, 'speak:');
+              textvalue = textvalue.replace(/listen:/ig, 'listen:');
+              textvalue = textvalue.replace(/print:/ig, 'print:');
+              textvalue = textvalue.replace(/value:/ig, 'value:');
+
+              textvalue = textvalue.replace("select: ", "select:");
+              textvalue = textvalue.replace("tick: ", "tick:");
+              textvalue = textvalue.replace("choose: ", "choose:");
+              // textvalue = textvalue.replace("speak: ", "speak:");
+              // textvalue = textvalue.replace("listen: ", "listen:");
+              textvalue = textvalue.replace("drag: ", "drag:");
+              textvalue = textvalue.replace("drop: ", "drop:");
+              textvalue = textvalue.replace("join: ", "join:");
+              textvalue = textvalue.replace("link: ", "link:");
+              // textvalue = textvalue.replace("playmp3: ", "playmp3:");
+              textvalue = textvalue.replace("print: ", "print:");
+              textvalue = textvalue.replace("value: ", "value:");
+
+              //textvalue = textvalue.replace(/\( transparent/ig,"(transparent");
+              //textvalue = textvalue.replace(/transparent \)/ig,"transparent)");
+              textvalue = textvalue.replace(/\(transparent/ig, "(transparent");
+              //textvalue = textvalue.replace("(transparent) ","(transparent)");
+
+              textvalue = textvalue.replace(/\(rate:/ig, "(rate:");
+              textvalue = textvalue.replace(/\(value:/ig, "(value:");
+
+              //hacemos trim
+              textvalue = textvalue.replace(/^\s*|\s*$/g, "");
+
+              //quitamos los puntos finales
+              //textvalue = textvalue.replace(/\s*[.]$/g,"");
+          }
+          return textvalue;
+      }
+
+
+      function pgrtxt(eltexto) {
+          var textvalue = eltexto;
+          if (textvalue.length > 0) {
+              textvalue = textvalue.split("$").join("'");
+              textvalue = textvalue.split("#").join('"');
+
+              textvalue = textvalue.replace('drag:', '<span style="font-weight: bold;text-decoration: underline;">drag:</span>');
+              textvalue = textvalue.replace('drop:', '<span style="font-weight: bold;text-decoration: underline;">drop:</span>');
+              // textvalue = textvalue.replace('playmp3:', '<span style="font-weight: bold;text-decoration: underline;">playmp3:</span>');
+              textvalue = textvalue.replace('select:', '<span style="font-weight: bold;text-decoration: underline;">select:</span>');
+              textvalue = textvalue.replace('tick:', '<span style="font-weight: bold;text-decoration: underline;">tick:</span>');
+              textvalue = textvalue.replace('choose:', '<span style="font-weight: bold;text-decoration: underline;">choose:</span>');
+              textvalue = textvalue.replace('join:', '<span style="font-weight: bold;text-decoration: underline;">join:</span>');
+              textvalue = textvalue.replace('link:', '<span style="font-weight: bold;text-decoration: underline;">link:</span>');
+              textvalue = textvalue.replace('print:', '<span style="font-weight: bold;text-decoration: underline;">print:</span>');
+              textvalue = textvalue.replace('value:', '<span style="font-weight: bold;text-decoration: underline;">value:</span>');
+              // textvalue = textvalue.replace(/listen\(.*?\):/, '<span style="font-weight: bold;text-decoration: underline;">$&</span>');
+              // textvalue = textvalue.replace(/speak\(.*?\):/, '<span style="font-weight: bold;text-decoration: underline;">$&</span>');
+              textvalue = textvalue.replace('(transparent)', '<span style="font-weight: bold;text-decoration: underline;">(transparent)</span>');
+              textvalue = textvalue.replace(/\(rate:.*?\)/, '<span style="font-weight: bold;text-decoration: underline;">$&</span>');
+              textvalue = textvalue.replace(/\(value:.*?\)/, '<span style="font-weight: bold;text-decoration: underline;">$&</span>');
+          }
+          return textvalue;
+      }
+
+
+      function mspos(e) {
+          e.preventDefault();
+          deslcncslls();
+          Xinicial = e.pageX;
+          Yinicial = e.pageY;
+          canvas.addEventListener("mousemove", mvpos, false);
+      }
+
+      function mvpos(e) {
+          e.preventDefault();
+          if (e.pageX > Xinicial) {
+              origenX = Xinicial;
+              Anchura = e.pageX - Xinicial - 5;
+          } else {
+              origenX = e.pageX + (12 - 10);
+              Anchura = Xinicial - e.pageX - (12 - 10);
+          }
+
+          if (e.pageY > Yinicial) {
+              origenY = Yinicial;
+              Altura = e.pageY - Yinicial - 5;
+          } else {
+              origenY = e.pageY + (12 - 10);
+              Altura = Yinicial - e.pageY - (12 - 10);
+          }
+
+          document.getElementById('capa2').innerHTML = '<div class="rectangulo" style="position: absolute; width: ' + Anchura + 'px; height: ' + Altura + 'px; z-index: 1; left: ' + origenX + 'px; top: ' + origenY + 'px;" id="capa2"></div>';
+      }
+
+      function msfn(e) {
+
+          canvas.removeEventListener("mousemove", mvpos, false);
+          document.getElementById('capa2').innerHTML = "";
+          if (Anchura > 8 && Altura > 8) {
+              if (origenX == ognxnt && origenY == ognynt) {
+
+              } else {
+                  i = contenidoaguardar.length;
+                  htmlnuevocuadro = '<div id="' + 'b' + 'a' + 'r' + 'r' + 'a' + 'c' + 'e' + 'n' + 't' + 'r' + 'o' + i + '" style="z-index:4;width:8px;height:8px;position:absolute;top:' + (origenY + parseInt(Altura / 2) - 4) + 'px;left:' + (origenX + parseInt(Anchura / 2) - 4) + 'px;cursor:move"  ' + 'o' + 'n' + 'm' + 'o' + 'u' + 's' + 'e' + 'd' + 'o' + 'w' + 'n' + '="' + 'd' + 'r' + 'g' + 't' + 'b' + 'x' + '(' + i + ')"></div><div id="' + 'b' + 'a' + 'r' + 'r' + 'a' + 'i' + 'n' + 'f' + 'e' + 'r' + 'i' + 'o' + 'r' + i + '" style="width:' + Anchura + 'px;height:2px;position:absolute;top:' + (origenY + Altura + 2) + 'px;left:' + origenX + 'px;cursor:ns-resize" ' + 'o' + 'n' + 'm' + 'o' + 'u' + 's' + 'e' + 'd' + 'o' + 'w' + 'n' + '="' + 'r' + 's' + 'z' + 'b' + 't' + 't' + '(' + i + ')"></div><div id="' + 'b' + 'a' + 'r' + 'r' + 'a' + 's' + 'u' + 'p' + 'e' + 'r' + 'i' + 'o' + 'r' + i + '" style="width:' + Anchura + 'px;height:2px;position:absolute;top:' + (origenY - 2) + 'px;left:' + origenX + 'px;cursor:ns-resize" ' + 'o' + 'n' + 'm' + 'o' + 'u' + 's' + 'e' + 'd' + 'o' + 'w' + 'n' + '="' + 'r' + 's' + 'z' + 't' + 'p' + '(' + i + ')"></div><div id="' + 'b' + 'a' + 'r' + 'r' + 'a' + 'i' + 'z' + 'q' + 'u' + 'i' + 'e' + 'r' + 'd' + 'a' + i + '" style="width:2px;height:' + Altura + 'px;position:absolute;top:' + origenY + 'px;left:' + (origenX - 2) + 'px;cursor:ew-resize" ' + 'o' + 'n' + 'm' + 'o' + 'u' + 's' + 'e' + 'd' + 'o' + 'w' + 'n' + '="' + 'r' + 's' + 'z' + 'l' + 'f' + '(' + i + ')"></div><div id="' + 'b' + 'a' + 'r' + 'r' + 'a' + 'd' + 'e' + 'r' + 'e' + 'c' + 'h' + 'a' + i + '" style="width:2px;height:' + Altura + 'px;position:absolute;top:' + origenY + 'px;left:' + (origenX + Anchura + 2) + 'px;cursor:ew-resize" ' + 'o' + 'n' + 'm' + 'o' + 'u' + 's' + 'e' + 'd' + 'o' + 'w' + 'n' + '="' + 'r' + 's' + 'z' + 'r' + 'g' + 't' + '(' + i + ')"></div><div class="editablediv" contenteditable="true" id="' + 't' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + i + '"  style="width:' + Anchura + 'px;height:' + Altura + 'px;font-size:14px;position:absolute;top:' + origenY + 'px;left:' + origenX + 'px" ' + 'o' + 'n' + 'f' + 'o' + 'c' + 'u' + 's' + '="' + 'f' + 'c' + 's' + 'b' + 'x' + '(' + i + ')" ' + 'o' + 'n' + 'b' + 'l' + 'u' + 'r' + '="' + 'b' + 'l' + 'r' + 'b' + 'x' + '(' + i + ')"></div>';
+                  lmcncntntr();
+                  contenidoaguardar.push(['', origenY, origenX, Altura, Anchura, '', 0, localStorage.getItem("defaultfontfamily"), localStorage.getItem("defaultfontsize"), localStorage.getItem("defaultfontcolor"), localStorage.getItem("defaultbgcolorred"), localStorage.getItem("defaultbgcolorgreen"), localStorage.getItem("defaultbgcolorblue"), localStorage.getItem("defaultbgopacity"), localStorage.getItem("defaultbordercolor"), localStorage.getItem("defaulttextalign"), '', localStorage.getItem("defaultborderwidth"), localStorage.getItem("defaultroundedcorners"), 0]);
+                  hayerror.push(0);
+                  document.getElementById('capa1').insertAdjacentHTML('beforeend', htmlnuevocuadro);
+                  localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+
+                  ognxnt = origenX;
+                  ognynt = origenY;
+              }
+          }
+
+
+      }
+
+
+      function slcncsll(numero) {
+          csllslc = numero;
+
+          if (document.getElementById('t' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + numero).getAttribute("class") == "editablediv") {
+              document.getElementById('t' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + numero).setAttribute("class", "selectededitablediv");
+          }
+          if (document.getElementById('t' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + numero).getAttribute("class") == "erroreditablediv") {
+              document.getElementById('t' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + numero).setAttribute("class", "errorselectededitablediv");
+          }
+      }
+
+      function deslcncslls() {
+          csllslc = 999999999;
+          var divs = document.getElementsByClassName('s' + 'e' + 'l' + 'e' + 'c' + 't' + 'e' + 'd' + 'e' + 'd' + 'i' + 't' + 'a' + 'b' + 'l' + 'e' + 'd' + 'i' + 'v');
+          for (var i = 0; i < divs.length; i++) {
+              divs[i].setAttribute("class", 'e' + 'd' + 'i' + 't' + 'a' + 'b' + 'l' + 'e' + 'd' + 'i' + 'v');
+          }
+          var errordivs = document.getElementsByClassName('e' + 'r' + 'r' + 'o' + 'r' + 's' + 'e' + 'l' + 'e' + 'c' + 't' + 'e' + 'd' + 'e' + 'd' + 'i' + 't' + 'a' + 'b' + 'l' + 'e' + 'd' + 'i' + 'v');
+          for (var i = 0; i < errordivs.length; i++) {
+              errordivs[i].setAttribute("class", 'e' + 'r' + 'r' + 'o' + 'r' + 'e' + 'd' + 'i' + 't' + 'a' + 'b' + 'l' + 'e' + 'd' + 'i' + 'v');
+          }
+      }
+
+      function drgtbx(numero) {
+
+
+          rszni = numero;
+          nchrgn = contenidoaguardar[numero][4];
+          ltrrgn = contenidoaguardar[numero][3];
+          lftrgn = contenidoaguardar[numero][2];
+          tprgn = contenidoaguardar[numero][1];
+          achnv = nchrgn;
+          ltanv = ltrrgn;
+          tpnv = tprgn;
+          lftnv = lftrgn;
+
+          document.addEventListener("mousemove", rrtrtbx, false);
+          document.addEventListener("mouseup", frrtrtbx, false);
+      }
+
+
+      function rrtrtbx(e) {
+          e.preventDefault();
+          document.body.style.cursor = "move";
+          document.getElementById("capafondo").style.cursor = "move";
+          lftnv = e.pageX - parseInt(nchrgn / 2);
+          tpnv = e.pageY - parseInt(ltrrgn / 2);
+          document.getElementById('capa2').innerHTML = '<div class="rectangulo" style="position: absolute; width: ' + nchrgn + 'px; height: ' + ltrrgn + 'px; z-index: 1; left: ' + lftnv + 'px; top: ' + tpnv + 'px;" id="capa2"></div>';
+
+      }
+
+      function frrtrtbx() {
+          document.body.style.cursor = "auto";
+          document.getElementById('capa2').innerHTML = "";
+          document.getElementById("capafondo").style.cursor = "crosshair";
+          document.removeEventListener("mousemove", rrtrtbx, false);
+          document.removeEventListener("mouseup", frrtrtbx, false);
+          lmcncntntr();
+          contenidoaguardar[rszni][1] = tpnv;
+          contenidoaguardar[rszni][2] = lftnv;
+          rllnrlmth();
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+          slcncsll(rszni);
+          rszni = 0;
+      }
+
+
+      function rszlf(numero) {
+          lmcncntntr();
+          rszni = numero;
+          nchrgn = contenidoaguardar[numero][4];
+          ltrrgn = contenidoaguardar[numero][3];
+          lftrgn = contenidoaguardar[numero][2];
+          tprgn = contenidoaguardar[numero][1];
+          achnv = nchrgn;
+          ltanv = ltrrgn;
+          tpnv = tprgn;
+          lftnv = lftrgn;
+
+          document.addEventListener("mousemove", mvizqd, false);
+          document.addEventListener("mouseup", fmvizqd, false);
+      }
+
+      function mvizqd(e) {
+          e.preventDefault();
+          document.body.style.cursor = "ew-resize";
+          document.getElementById("capafondo").style.cursor = "ew-resize";
+          if ((e.pageX + 8) < (lftrgn + nchrgn)) {
+              achnv = (nchrgn + lftrgn) - e.pageX;
+              lftnv = e.pageX;
+          } else {
+              achnv = 8;
+              lftnv = (nchrgn + lftrgn) - 8;
+          }
+          document.getElementById('capa2').innerHTML = '<div class="rectangulo" style="position: absolute; width: ' + achnv + 'px; height: ' + ltrrgn + 'px; z-index: 1; left: ' + lftnv + 'px; top: ' + tprgn + 'px;" id="capa2"></div>';
+      }
+
+
+      function fmvizqd() {
+
+          document.body.style.cursor = "auto";
+          document.getElementById('capa2').innerHTML = "";
+          document.getElementById("capafondo").style.cursor = "crosshair";
+          document.removeEventListener("mousemove", mvizqd, false);
+          document.removeEventListener("mouseup", fmvizqd, false);
+          contenidoaguardar[rszni][4] = achnv;
+          contenidoaguardar[rszni][2] = lftnv;
+          rllnrlmth();
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+          slcncsll(rszni);
+          rszni = 0;
+      }
+
+
+      function rsztp(numero) {
+          rszni = numero;
+          nchrgn = contenidoaguardar[numero][4]
+          ltrrgn = contenidoaguardar[numero][3]
+          lftrgn = contenidoaguardar[numero][2]
+          tprgn = contenidoaguardar[numero][1]
+          achnv = nchrgn;
+          ltanv = ltrrgn;
+          tpnv = tprgn;
+          lftnv = lftrgn;
+
+          document.addEventListener("mousemove", mvrrb, false);
+          document.addEventListener("mouseup", fmvrrb, false);
+      }
+
+      function mvrrb(e) {
+          e.preventDefault();
+          document.body.style.cursor = "ns-resize";
+          document.getElementById("capafondo").style.cursor = "ns-resize";
+          //if (e.pageX > lftrgn) {
+          ltanv = (ltrrgn + tprgn) - e.pageY;
+          tpnv = e.pageY;
+          document.getElementById('capa2').innerHTML = '<div class="rectangulo" style="position: absolute; width: ' + nchrgn + 'px; height: ' + ltanv + 'px; z-index: 1; left: ' + lftrgn + 'px; top: ' + tpnv + 'px;" id="capa2"></div>';
+          //}
+
+      }
+
+
+      function fmvrrb() {
+          document.body.style.cursor = "auto";
+          document.getElementById('capa2').innerHTML = "";
+          document.getElementById("capafondo").style.cursor = "crosshair";
+          document.removeEventListener("mousemove", mvrrb, false);
+          document.removeEventListener("mouseup", fmvrrb, false);
+          lmcncntntr();
+          contenidoaguardar[rszni][3] = ltanv;
+          contenidoaguardar[rszni][1] = tpnv;
+          rllnrlmth();
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+          slcncsll(rszni);
+          rszni = 0;
+      }
+
+
+      function rszrgt(numero) {
+          rszni = numero;
+          nchrgn = contenidoaguardar[numero][4];
+          ltrrgn = contenidoaguardar[numero][3];
+          lftrgn = contenidoaguardar[numero][2];
+          tprgn = contenidoaguardar[numero][1];
+          achnv = nchrgn;
+          ltanv = ltrrgn;
+          tpnv = tprgn;
+          lftnv = lftrgn;
+
+          document.addEventListener("mousemove", mvdrch, false);
+          document.addEventListener("mouseup", fmvdrch, false);
+      }
+
+      function mvdrch(e) {
+          e.preventDefault();
+          document.body.style.cursor = "ew-resize";
+          document.getElementById("capafondo").style.cursor = "ew-resize";
+          //if (e.pageX > lftrgn) {
+          achnv = e.pageX - lftrgn;
+          lftnv = lftrgn;
+          document.getElementById('capa2').innerHTML = '<div class="rectangulo" style="position: absolute; width: ' + achnv + 'px; height: ' + ltrrgn + 'px; z-index: 1; left: ' + lftnv + 'px; top: ' + tprgn + 'px;" id="capa2"></div>';
+          //}
+
+      }
+
+
+      function fmvdrch() {
+          document.body.style.cursor = "auto";
+          document.getElementById('capa2').innerHTML = "";
+          document.getElementById("capafondo").style.cursor = "crosshair";
+          document.removeEventListener("mousemove", mvdrch, false);
+          document.removeEventListener("mouseup", fmvdrch, false);
+          lmcncntntr();
+          contenidoaguardar[rszni][4] = achnv;
+          contenidoaguardar[rszni][2] = lftnv;
+          rllnrlmth();
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+
+          slcncsll(rszni);
+          rszni = 0;
+      }
+
+
+      function rszbtt(numero) {
+          rszni = numero;
+          nchrgn = contenidoaguardar[numero][4];
+          ltrrgn = contenidoaguardar[numero][3];
+          lftrgn = contenidoaguardar[numero][2];
+          tprgn = contenidoaguardar[numero][1];
+          achnv = nchrgn;
+          ltanv = ltrrgn;
+          tpnv = tprgn;
+          lftnv = lftrgn;
+
+          document.addEventListener("mousemove", mvbj, false);
+          document.addEventListener("mouseup", fmvbj, false);
+      }
+
+      function mvbj(e) {
+          e.preventDefault();
+          document.body.style.cursor = "ns-resize";
+          document.getElementById("capafondo").style.cursor = "ns-resize";
+          //if (e.pageX > lftrgn) {
+          ltanv = e.pageY - tprgn;
+          tpnv = tprgn;
+          document.getElementById('capa2').innerHTML = '<div class="rectangulo" style="position: absolute; width: ' + nchrgn + 'px; height: ' + ltanv + 'px; z-index: 1; left: ' + lftrgn + 'px; top: ' + tpnv + 'px;" id="capa2"></div>';
+          //}
+
+      }
+
+
+      function fmvbj() {
+          document.body.style.cursor = "auto";
+          document.getElementById('capa2').innerHTML = "";
+          document.getElementById("capafondo").style.cursor = "crosshair";
+          document.removeEventListener("mousemove", mvbj, false);
+          document.removeEventListener("mouseup", fmvbj, false);
+          lmcncntntr();
+          contenidoaguardar[rszni][3] = ltanv;
+          contenidoaguardar[rszni][1] = tpnv;
+          rllnrlmth();
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+
+          slcncsll(rszni);
+          rszni = 0;
+      }
+
+
+      function chgtxt(numero) {
+          contenidotextbox = document.getElementById('textbox' + numero).textContent;
+          namevalue = rrgltxt(contenidotextbox);
+          contenidoaguardar[numero][0] = namevalue;
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+
+          if (namevalue.toLowerCase().indexOf('playmp3:') == 0) {
+              if (namevalue.length < 12) {
+                  contenidofloatlayer = '<p align="center"><font face="Arial" size="4" color="#0099FF"><b>Upload your mp3 file: </b></font></p>';
+                  contenidofloatlayer = contenidofloatlayer + '<form METHOD="POST" ENCTYPE="multipart/form-data" name="uploadmp3form" action="editor.asp?edit=&numerodecuadro=' + numero + '">';
+                  contenidofloatlayer = contenidofloatlayer + '<p align="center"><font color="#666666" face="Arial"><input TYPE="FILE" SIZE="40" NAME="fileinput" id="fileinput">&nbsp;&nbsp;&nbsp;<input name="boton" TYPE="button" VALUE="Upload" onClick="pldsndfl()"></font></p>';
+                  contenidofloatlayer = contenidofloatlayer + '<p align="center"><font face="Arial" color="#666666">Format: mp3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Size limit: 5MB</font></p></form></p><p align="center"><b><font face="Arial"><span class="link" onclick="snflplcl(' + numero + ')">Cancel</span></font></b>';
+                  document.getElementById("floatLayer").innerHTML = contenidofloatlayer;
+                  document.getElementById('barracentro' + numero).focus();
+                  document.getElementById("floatLayer").style.display = "block";
+              }
+          }
+
+          if (namevalue.toLowerCase().indexOf('wordsearch') == 0) {
+              fcsdb = 999999998;
+              contenidofloatlayer = '<p align="center"><font face="Arial" size="4" color="#0099FF"><b>Add wordsearch: </b></font></p>';
+              contenidofloatlayer = contenidofloatlayer + '<p align="center"><font color="#666666" face="Arial">Number of rows: <input TYPE="text" SIZE="4" NAME="numberofrows" id="numberofrows"><br>';
+              contenidofloatlayer = contenidofloatlayer + 'Number of columns: <input TYPE="text" SIZE="4" NAME="numberofcolumns" id="numberofcolumns"><br>';
+              contenidofloatlayer = contenidofloatlayer + '<input TYPE="button" NAME="addwordsearchbutton" id="addwordsearchbutton" value="Save" onclick="addwordsearch(' + numero + ')"><br>';
+              contenidofloatlayer = contenidofloatlayer + '</font></p>';
+              contenidofloatlayer = contenidofloatlayer + '<p align="center"><b><font face="Arial"><span class="link" onclick="snflplcl(' + numero + ')">Cancel</span></font></b>';
+              document.getElementById("floatLayer").innerHTML = contenidofloatlayer;
+              document.getElementById('barracentro' + numero).focus();
+              document.getElementById("floatLayer").style.display = "block";
+          }
+
+          //if (heelf > 0 ) {
+          //cmprbrrrs();
+          //}
+
+      }
+
+
+      function addwordsearch(numero) {
+          var faltarowsocolumns = 0;
+          if (document.getElementById("numberofrows").value.length > 0) {
+              if (isNaN(document.getElementById("numberofrows").value)) {
+                  faltarowsocolumns = 1;
+              } else {
+                  if (Number(document.getElementById("numberofrows").value) == 0) {
+                      faltarowsocolumns = 1;
+                  }
+              }
+          } else {
+              faltarowsocolumns = 1;
+          }
+
+          if (document.getElementById("numberofcolumns").value.length > 0) {
+              if (isNaN(document.getElementById("numberofcolumns").value)) {
+                  faltarowsocolumns = 1;
+              } else {
+                  if (Number(document.getElementById("numberofcolumns").value) == 0) {
+                      faltarowsocolumns = 1;
+                  }
+              }
+          } else {
+              faltarowsocolumns = 1;
+          }
+
+          if (faltarowsocolumns == 1) {
+              alert("Please enter the number of rows and columns");
+          } else {
+              var nuevotextoaintroducir = "wordsearch(" + Number(document.getElementById("numberofrows").value) + "x" + Number(document.getElementById("numberofcolumns").value) + "):";
+              for (var i = 0; i < Number(document.getElementById("numberofrows").value); i++) {
+                  for (var j = 0; j < Number(document.getElementById("numberofcolumns").value); j++) {
+                      nuevotextoaintroducir = nuevotextoaintroducir + "x";
+                  }
+              }
+              contenidoaguardar[numero][0] = nuevotextoaintroducir;
+              localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+              rllnrlmth();
+
+              document.getElementById("floatLayer").style.display = "none";
+              fcsdb = 999999999;
+
+          }
+      }
+
+
+      function clickwordsearchtd(numero, numerotd) {
+          var separardospuntos = contenidoaguardar[numero][0].split(":");
+          var filasycolumnas = separardospuntos[1];
+          var filasycolumnasnuevo = filasycolumnas;
+          if (filasycolumnas.charAt(numerotd) == "v") {
+              filasycolumnasnuevo = filasycolumnasnuevo.substring(0, numerotd) + "x" + filasycolumnasnuevo.substring(numerotd + 1);
+          } else {
+              filasycolumnasnuevo = filasycolumnasnuevo.substring(0, numerotd) + "v" + filasycolumnasnuevo.substring(numerotd + 1);
+          }
+
+          contenidoaguardar[numero][0] = separardospuntos[0] + ":" + filasycolumnasnuevo;
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+          rllnrlmth();
+      }
+
+
+      function fcsbx(numero) {
+          deslcncslls();
+          fcsdb = numero;
+      }
+
+
+      function blrbx(numero) {
+          fcsdb = 999999999;
+
+          if (document.getElementById('textbox' + numero).innerHTML.indexOf('<table class="wordsearchtable">') == 0) {
+              contenidoaguardar[numero][0] = "wordsearch:" + document.getElementById('textbox' + numero).textContent;
+              localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+              rllnrlmth();
+          } else if (document.getElementById('textbox' + numero).textContent.indexOf('<iframe src="https://onedrive.live.com/embed') >= 0) {
+              var separariframe = document.getElementById('textbox' + numero).textContent.split('"');
+              contenidoaguardar[numero][0] = "";
+              for (var i = 0; i < separariframe.length; i++) {
+                  if (separariframe[i].indexOf('https://onedrive.live.com/embed') == 0) {
+                      contenidoaguardar[numero][0] = separariframe[i];
+                  }
+              }
+              localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+              rllnrlmth();
+          } else {
+              contenidotextbox = document.getElementById('t' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + numero).textContent;
+              namevalue = rrgltxt(contenidotextbox);
+
+              if (namevalue.indexOf('listen:') == 0 || namevalue.indexOf('Listen:') == 0) {
+                  if (defaultspeechsynthesizerlanguage.indexOf("-") > 0) {
+                      var nuevotextoaintroducir = namevalue.replace("Listen:", "listen(" + defaultspeechsynthesizerlanguage + "):");
+                      nuevotextoaintroducir = nuevotextoaintroducir.replace("listen:", "listen(" + defaultspeechsynthesizerlanguage + "):");
+                      contenidoaguardar[numero][0] = nuevotextoaintroducir;
+                      localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+                      rllnrlmth();
+                  } else {
+                      contenidofloatlayer = '<p align="center"><font face="Arial" size="4" color="#0099FF"><b>Speech synthesizer: ' + contenidoaguardar[numero][0].substring(7).split("$").join("'") + '</b></font></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"><font face="Arial">Please choose the language for the speech synthesizer:</font></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"><select name="speechsynthesizerlanguage" id="speechsynthesizerlanguage"><option value="choose">      </option><option value="de-DE">Deutsch</option><option value="en-US">US English</option><option value="en-GB">UK English</option><option value="es-ES">Español</option><option value="es-US">Español de Estados Unidos</option><option value="fr-FR">Français</option><option value="hi-IN">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</option><option value="id-ID">Bahasa Indonesia</option><option value="it-IT">Italiano</option><option value="ja-JP">&#26085;&#26412;&#35486;</option><option value="ko-KR">&#54620;&#44397;&#51032;</option><option value="nl-NL">Nederlands</option><option value="pl-PL">Polski</option><option value="pt-BR">Português do Brasil</option><option value="ru-RU">&#1088;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</option><option value="zh-CN">&#26222;&#36890;&#35805;&#65288;&#20013;&#22269;&#22823;&#38470;&#65289;</option><option value="zh-HK">&#31908;&#35486;&#65288;&#39321;&#28207;&#65289;</option><option value="zh-TW">&#22283;&#35486;&#65288;&#33274;&#28771;&#65289;</option></select>&nbsp;&nbsp; <input type="checkbox" name="speechsynthesizerlanguagedefault" id="speechsynthesizerlanguagedefault" value="ON"><font face="Arial" size="2">Set as default for this worksheet</font></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"> <input type="submit" value="Save" name="B1" onclick="spchsynlgchs(' + numero + ')"><br></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"><font face="Arial" size="2">Warning: speech synthesizer only works in Chrome and Safari.</font><br></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"><b><font face="Arial"><span class="link" onclick="spchsynlgchscl(' + numero + ')">Cancel</span></font></b>';
+                      document.getElementById("floatLayer").innerHTML = contenidofloatlayer;
+                      document.getElementById('barracentro' + numero).focus();
+                      document.getElementById("floatLayer").style.display = "block";
+                  }
+              }
+
+              if (namevalue.indexOf('speak:') == 0 || namevalue.indexOf('Speak:') == 0) {
+                  if (defaultspeechrecognizerlanguage.indexOf("-") > 0) {
+                      var nuevotextoaintroducir = namevalue.replace("Speak:", "speak(" + defaultspeechrecognizerlanguage + "):");
+                      nuevotextoaintroducir = nuevotextoaintroducir.replace("speak:", "speak(" + defaultspeechrecognizerlanguage + "):");
+                      contenidoaguardar[numero][0] = nuevotextoaintroducir;
+                      localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+                      rllnrlmth();
+                  } else {
+                      contenidofloatlayer = '<p align="center"><font face="Arial" size="4" color="#0099FF"><b>Speech recognizer: ' + contenidoaguardar[numero][0].substring(6).split("$").join("'") + '</b></font></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"><font face="Arial">Please choose the language for the speech recognizer:</font></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"><select id="speechrecognizerlanguage" name="speechrecognizerlanguage" onchange="updateCountry()"></select><select id="speechrecognizerdialect" name="speechrecognizerdialect" style="visibility:hidden"></select><br><input type="checkbox" name="speechsynthesizerlanguagedefault" id="speechrecognizerlanguagedefault" value="ON"><font face="Arial" size="2">Set as default for this worksheet</font></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"> <input type="submit" value="Save" name="B1" onclick="spchrcgnlgchs(' + numero + ')"><br></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"><font face="Arial" size="2">Warning: speech recognition only works in Google Chrome (PC and Android).</font><br></p>';
+                      contenidofloatlayer = contenidofloatlayer + '<p align="center"><b><font face="Arial"><span class="link" onclick="spchrcgnlgchscl(' + numero + ')">Cancel</span></font></b>';
+                      document.getElementById("floatLayer").innerHTML = contenidofloatlayer;
+                      for (var i = 0; i < langs.length; i++) {
+                          document.getElementById("speechrecognizerlanguage").options[i] = new Option(langs[i][0], i);
+                      }
+                      document.getElementById('barracentro' + numero).focus();
+                      document.getElementById("floatLayer").style.display = "block";
+                  }
+              }
+
+              //esto es nuevo del
+              document.getElementById('textbox' + numero).innerHTML = rrgltxt(document.getElementById('t' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + numero).textContent);
+              document.getElementById('textbox' + numero).innerHTML = pgrtxt(document.getElementById('textbox' + numero).textContent);
+              //fin del xxxxxxxxxxx
+
+              chgtxt(numero);
+
+          }
+
+          //vldrcdr(numero);
+      }
+
+
+      function updateCountry() {
+          select_language = document.getElementById("speechrecognizerlanguage");
+          select_dialect = document.getElementById("speechrecognizerdialect");
+          for (var i = select_dialect.options.length - 1; i >= 0; i--) {
+              select_dialect.remove(i);
+          }
+          var list = langs[select_language.selectedIndex];
+          for (var i = 1; i < list.length; i++) {
+              select_dialect.options.add(new Option(list[i][1], list[i][0]));
+          }
+          select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+      }
+
+
+      function vldrcdr(numero) {
+          document.getElementById("textbox" + numero).setAttribute("class", "editablediv");
+          document.getElementById("textbox" + numero).removeAttribute("title");
+          document.getElementById("textbox" + numero).removeAttribute("alt");
+          contenidoaguardar[numero][6] = 0;
+          contenidotextbox = document.getElementById('textbox' + numero).textContent;
+          namevalue = rrgltxt(contenidotextbox);
+
+          //if (namevalue.indexOf("drag:") > -1 || namevalue.indexOf("drop:") > -1 ) {
+          //if (namevalue.length > 5) {
+          //var divs = document.getElementsByTagName("div");
+          //for (var i = 0; i < divs.length; i++) {
+          //if (divs[i].getAttribute("id").indexOf("textbox") == 0 && divs[i].getAttribute("id").indexOf("textbox" + numero) < 0) {
+          //if (arreglarTexto(divs[i].textContent) == namevalue) {
+          //document.getElementById("textbox"+numero).setAttribute("class","erroreditablediv");
+          //document.getElementById("textbox"+numero).setAttribute("title","" + namevalue + "");
+          //document.getElementById("textbox"+numero).setAttribute("alt","" + namevalue + "");
+          //contenidoaguardar[numero][6] = 1;
+          //}
+          //}
+          //}
+          //}
+          //}
+
+          if (namevalue.indexOf("drag:") > -1 && namevalue.length > 5) {
+              var hayundropparaeldrag = 0;
+              var divs = document.getElementsByTagName("div");
+              for (var i = 0; i < divs.length; i++) {
+                  if (divs[i].getAttribute("id").indexOf("textbox") == 0) {
+                      if (rrgltxt(divs[i].textContent).toLowerCase() == namevalue.toLowerCase().replace("drag", "drop")) {
+                          hayundropparaeldrag = 1;
+                      }
+                  }
+              }
+              if (hayundropparaeldrag == 0) {
+                  document.getElementById("textbox" + numero).setAttribute("class", "erroreditablediv");
+                  document.getElementById("textbox" + numero).setAttribute("title", namevalue.toLowerCase().replace("drag", "drop") + " is missing");
+                  document.getElementById("textbox" + numero).setAttribute("alt", namevalue.toLowerCase().replace("drag", "drop") + " is missing");
+                  contenidoaguardar[numero][6] = 1;
+              }
+          }
+
+          //if (namevalue.indexOf("join:") > -1 && namevalue.length > 5) {
+          //var hayotrojoin = 0;
+          //var divs = document.getElementsByTagName("div");
+          //for (var i = 0; i < divs.length; i++) {
+          //if (divs[i].getAttribute("id").indexOf("textbox") == 0 && divs[i].getAttribute("id").indexOf("textbox" + numero) < 0) {
+          //if (rrgltxt(divs[i].textContent).toLowerCase() == namevalue.toLowerCase() ) {
+          //hayotrojoin = 1;
+          //}
+          //}
+          //}
+          //if (hayotrojoin == 0) {
+          //document.getElementById("textbox"+numero).setAttribute("class","erroreditablediv");
+          //document.getElementById("textbox"+numero).setAttribute("title","Another " + namevalue.toLowerCase() + " is missing");
+          //document.getElementById("textbox"+numero).setAttribute("alt","Another " + namevalue.toLowerCase() + " is missing");
+          //contenidoaguardar[numero][6] = 1;
+          //}
+          //}
+
+          if (namevalue.indexOf("drop:") > -1 && namevalue.length > 5) {
+              var hayundragparaeldrop = 0;
+              var divs = document.getElementsByTagName("div");
+              for (var i = 0; i < divs.length; i++) {
+                  if (divs[i].getAttribute("id").indexOf("textbox") == 0) {
+                      if (rrgltxt(divs[i].textContent).toLowerCase() == namevalue.toLowerCase().replace("drop", "drag")) {
+                          hayundragparaeldrop = 1;
+                      }
+                  }
+              }
+              if (hayundragparaeldrop == 0) {
+                  document.getElementById("textbox" + numero).setAttribute("class", "erroreditablediv");
+                  document.getElementById("textbox" + numero).setAttribute("title", namevalue.toLowerCase().replace("drop", "drag") + " is missing");
+                  document.getElementById("textbox" + numero).setAttribute("alt", namevalue.toLowerCase().replace("drop", "drag") + " is missing");
+                  contenidoaguardar[numero][6] = 1;
+              }
+          }
+
+
+          if (namevalue.indexOf("choose:") > -1) {
+              if (namevalue.indexOf("/") < 7) {
+                  document.getElementById("textbox" + numero).setAttribute("class", "erroreditablediv");
+                  document.getElementById("textbox" + numero).setAttribute("title", "You must enter at least two options separated with bars. For example: Choose: there is / *there are");
+                  document.getElementById("textbox" + numero).setAttribute("alt", "You must enter at least two options separated with bars. For example: Choose: there is / *there are");
+                  contenidoaguardar[numero][6] = 1;
+                  //alert('You must enter at least two options separated with bars. For example: Choose: there is / *there are');
+              } else if (namevalue.indexOf("/*") < 7 && namevalue.indexOf(":*") < 5) {
+                  document.getElementById("textbox" + numero).setAttribute("class", "erroreditablediv");
+                  document.getElementById("textbox" + numero).setAttribute("title", "You must enter an asterisk before the right option. For example: Choose: there is/ *there are");
+                  document.getElementById("textbox" + numero).setAttribute("alt", "You must enter an asterisk before the right option. For example: Choose: there is/ *there are");
+                  contenidoaguardar[numero][6] = 1;
+                  //alert('You must enter an asterisk before the right option. For example: Choose: there is/ *there are');
+              }
+
+          }
+
+
+      }
+
+
+      //function cmprbrrrs() {
+      //heelf = 0;
+      //for (var j=0; j < contenidoaguardar.length; j++){
+      //vldrcdr(j);
+      //if (contenidoaguardar[j][6] == 1) {
+      //heelf = 1;
+      //}
+      //}
+      //return heelf;
+      //}
+
+
+      function pldsndfl() {
+          var input, file;
+
+          if (!window.FileReader) {
+              alert("Your web browser is not compatible with this function. Please update to the last version.");
+              return;
+          }
+
+          input = document.getElementById('f' + 'i' + 'l' + 'e' + 'i' + 'n' + 'p' + 'u' + 't');
+          if (!input) {
+              alert("No file was found. Please select a file");
+          } else if (!input.files) {
+              alert("zzzyourwebbrowserisnotupdated");
+          } else if (!input.files[0]) {
+              alert("Please select a file before clicking Load");
+          } else {
+              file = input.files[0];
+              fileName = file.name;
+              dots = fileName.split(".")
+              fileType = "." + dots[dots.length - 1];
+
+              if (fileType == '.mp3' || fileType == '.MP3') {
+                  if (file.size > 5100000) {
+                      alert("Your file size exceeds the limit (5MB)");
+                  } else {
+                      nvrchvmpt();
+                  }
+
+              } else {
+                  alert("ERROR: File format not allowed.");
+              }
+
+          }
+      }
+
+
+      function nvrchvmpt() {
+          document.uploadmp3form.boton.disabled = true;
+          document.body.style.cursor = "progress";
+          document.uploadmp3form.submit();
+      }
+
+
+      function spchsynlgchs(numero) {
+          if (document.getElementById('s' + 'p' + 'e' + 'e' + 'c' + 'h' + 's' + 'y' + 'n' + 't' + 'h' + 'e' + 's' + 'i' + 'z' + 'e' + 'r' + 'l' + 'a' + 'n' + 'g' + 'u' + 'a' + 'g' + 'e').value == "choose") {
+              alert("Please choose the language");
+          } else {
+              if (document.getElementById('s' + 'p' + 'e' + 'e' + 'c' + 'h' + 's' + 'y' + 'n' + 't' + 'h' + 'e' + 's' + 'i' + 'z' + 'e' + 'r' + 'l' + 'a' + 'n' + 'g' + 'u' + 'a' + 'g' + 'e' + 'd' + 'e' + 'f' + 'a' + 'u' + 'l' + 't').checked) {
+                  defaultspeechsynthesizerlanguage = document.getElementById('s' + 'p' + 'e' + 'e' + 'c' + 'h' + 's' + 'y' + 'n' + 't' + 'h' + 'e' + 's' + 'i' + 'z' + 'e' + 'r' + 'l' + 'a' + 'n' + 'g' + 'u' + 'a' + 'g' + 'e').value;
+              }
+              var languageelegido = document.getElementById('s' + 'p' + 'e' + 'e' + 'c' + 'h' + 's' + 'y' + 'n' + 't' + 'h' + 'e' + 's' + 'i' + 'z' + 'e' + 'r' + 'l' + 'a' + 'n' + 'g' + 'u' + 'a' + 'g' + 'e').value;
+              var eltextointroducido = contenidoaguardar[numero][0];
+              var nuevotextoaintroducir = eltextointroducido.replace("Listen:", "listen(" + languageelegido + "):");
+              nuevotextoaintroducir = nuevotextoaintroducir.replace("listen:", "listen(" + languageelegido + "):");
+              contenidoaguardar[numero][0] = nuevotextoaintroducir;
+              localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+              rllnrlmth();
+              document.getElementById("floatLayer").style.display = "none";
+          }
+      }
+
+
+      function spchsynlgchscl(numero) {
+          contenidoaguardar[numero][0] = "";
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+          rllnrlmth();
+          document.getElementById("floatLayer").style.display = "none";
+      }
+
+
+      function spchrcgnlgchs(numero) {
+          if (document.getElementById("speechrecognizerlanguage").value == "choose") {
+              alert("Please choose the language");
+          } else {
+              if (document.getElementById('speechrecognizerlanguagedefault').checked) {
+                  defaultspeechrecognizerlanguage = document.getElementById('speechrecognizerdialect').value;
+              }
+              var languageelegido = document.getElementById('speechrecognizerdialect').value;
+              var eltextointroducido = contenidoaguardar[numero][0];
+              var nuevotextoaintroducir = eltextointroducido.replace("Speak:", "speak(" + languageelegido + "):");
+              nuevotextoaintroducir = nuevotextoaintroducir.replace("speak:", "speak(" + languageelegido + "):");
+              contenidoaguardar[numero][0] = nuevotextoaintroducir;
+              localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+              rllnrlmth();
+              document.getElementById("floatLayer").style.display = "none";
+          }
+      }
+
+
+      function spchrcgnlgchscl(numero) {
+          contenidoaguardar[numero][0] = "";
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+          rllnrlmth();
+          document.getElementById("floatLayer").style.display = "none";
+      }
+
+
+      function snflplcl(numero) {
+          contenidoaguardar[numero][0] = "";
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+          rllnrlmth();
+          document.getElementById("floatLayer").style.display = "none";
+      }
+      function imgLoading(){
+          var imgElement = localStorage.getItem("base64")
+          document.getElementById("imgId").src = imgElement;
+      }
+
+      function iniciarFuncion() {
+
+          offxf = document.getElementById('c' + 'a' + 'p' + 'a' + 'f' + 'o' + 'n' + 'd' + 'o').offsetLeft;
+          offyf = document.getElementById('c' + 'a' + 'p' + 'a' + 'f' + 'o' + 'n' + 'd' + 'o').offsetTop;
+
+          // window.parent.showMenu();
+          canvas = document.getElementById("capafondo");
+          canvas.addEventListener("mouseup", msfn, false);
+          canvas.addEventListener("mousedown", mspos, false);
+          if (localStorage.getItem("contenidoaguardar") === null) {
+              contenidoaguardar = [];
+          } else {
+              contenidoaguardar = JSON.parse(localStorage.getItem("contenidoaguardar"));
+              if (codigomp3subido.length > 0 && numerodecuadromp3subido < 999999999) {
+                  contenidoaguardar[numerodecuadromp3subido][0] = "playmp3:" + codigomp3subido;
+                  localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+              }
+          }
+          rllnrlmth();
+          i = contenidoaguardar.length;
+
+      }
+
+
+      function rllnrlmth() {
+          document.getElementById('capa1').innerHTML = "";
+          for (var j = 0; j < contenidoaguardar.length; j++) {
+              if (contenidoaguardar[j].length < 8) {
+                  contenidoaguardar[j].push(localStorage.getItem("defaultfontfamily"), localStorage.getItem("defaultfontsize"), localStorage.getItem("defaultfontcolor"), localStorage.getItem("defaultbgcolorred"), localStorage.getItem("defaultbgcolorgreen"), localStorage.getItem("defaultbgcolorblue"), localStorage.getItem("defaultbgopacity"), localStorage.getItem("defaultbordercolor"), localStorage.getItem("defaulttextalign"), '', localStorage.getItem("defaultborderwidth"), localStorage.getItem("defaultroundedcorners"), 0);
+                  localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+              }
+
+              if (contenidoaguardar[j][6] == 0) {
+                  elclass = "editablediv";
+              } else {
+                  elclass = "erroreditablediv";
+              }
+
+              if (contenidoaguardar[j][0].indexOf('wordsearch(') == 0) {
+                  var separarlosdospuntos = contenidoaguardar[j][0].split(":");
+                  var rowsandcolumns = separarlosdospuntos[1];
+                  var separarelnumerodecolumnas = separarlosdospuntos[0].split("x");
+                  var elnumerodecolumnas = Number(separarelnumerodecolumnas[1].replace(")", ""));
+
+                  var numerodecolumna = 0;
+                  var htmltable = '<table class="wordsearchtable">';
+                  for (var k = 0; k < rowsandcolumns.length; k++) {
+
+                      if (numerodecolumna == 0) {
+                          htmltable = htmltable + '<tr>';
+                      }
+
+                      if (rowsandcolumns.charAt(k) == "v") {
+                          htmltable = htmltable + '<td class="clickedtd" onclick="clickwordsearchtd(' + j + ',' + k + ')"></td>';
+                      } else {
+                          htmltable = htmltable + '<td class="wordsearchtd" onclick="clickwordsearchtd(' + j + ',' + k + ')"></td>';
+                      }
+
+                      numerodecolumna = numerodecolumna + 1;
+                      if (numerodecolumna == elnumerodecolumnas) {
+                          htmltable = htmltable + '</tr>';
+                          numerodecolumna = 0;
+                      }
+
+                  }
+                  htmltable = htmltable + '</table>';
+
+                  nuevohtml = '<div id="barrainferior' + j + '" style="width:' + contenidoaguardar[j][4] + 'px;height:2px;position:absolute;top:' + (contenidoaguardar[j][1] + contenidoaguardar[j][3] + 2) + 'px;left:' + contenidoaguardar[j][2] + 'px;cursor:ns-resize" onmousedown="rszbtt(' + j + ')"></div><div id="barrasuperior' + j + '" style="width:' + contenidoaguardar[j][4] + 'px;height:2px;position:absolute;top:' + (contenidoaguardar[j][1] - 2) + 'px;left:' + contenidoaguardar[j][2] + 'px;cursor:ns-resize" onmousedown="rsztp(' + j + ')"></div><div id="barraizquierda' + j + '" style="width:2px;height:' + contenidoaguardar[j][3] + 'px;position:absolute;top:' + contenidoaguardar[j][1] + 'px;left:' + (contenidoaguardar[j][2] - 2) + 'px;cursor:ew-resize" onmousedown="rszlf(' + j + ')"></div><div id="barraderecha' + j + '" style="width:2px;height:' + contenidoaguardar[j][3] + 'px;position:absolute;top:' + contenidoaguardar[j][1] + 'px;left:' + (contenidoaguardar[j][2] + contenidoaguardar[j][4] + 2) + 'px;cursor:ew-resize" onmousedown="rszrgt(' + j + ')"></div><div class="' + elclass + '" contenteditable="false" id="' + 't' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + j + '"  style="width:' + contenidoaguardar[j][4] + 'px;height:' + contenidoaguardar[j][3] + 'px;font-size:14px;position:absolute;top:' + contenidoaguardar[j][1] + 'px;left:' + contenidoaguardar[j][2] + 'px">' + htmltable + '</div>';
+                  document.getElementById('capa1').insertAdjacentHTML('beforeend', nuevohtml);
+              } else {
+                  nuevohtml = '<div id="barracentro' + j + '" style="z-index:4;width:8px;height:8px;position:absolute;top:' + (contenidoaguardar[j][1] + parseInt(contenidoaguardar[j][3] / 2) - 4) + 'px;left:' + (contenidoaguardar[j][2] + parseInt(contenidoaguardar[j][4] / 2) - 4) + 'px;cursor:move" onmousedown="drgtbx(' + j + ')"></div><div id="barrainferior' + j + '" style="width:' + contenidoaguardar[j][4] + 'px;height:2px;position:absolute;top:' + (contenidoaguardar[j][1] + contenidoaguardar[j][3] + 2) + 'px;left:' + contenidoaguardar[j][2] + 'px;cursor:ns-resize" onmousedown="rszbtt(' + j + ')"></div><div id="barrasuperior' + j + '" style="width:' + contenidoaguardar[j][4] + 'px;height:2px;position:absolute;top:' + (contenidoaguardar[j][1] - 2) + 'px;left:' + contenidoaguardar[j][2] + 'px;cursor:ns-resize" onmousedown="rsztp(' + j + ')"></div><div id="barraizquierda' + j + '" style="width:2px;height:' + contenidoaguardar[j][3] + 'px;position:absolute;top:' + contenidoaguardar[j][1] + 'px;left:' + (contenidoaguardar[j][2] - 2) + 'px;cursor:ew-resize" onmousedown="rszlf(' + j + ')"></div><div id="barraderecha' + j + '" style="width:2px;height:' + contenidoaguardar[j][3] + 'px;position:absolute;top:' + contenidoaguardar[j][1] + 'px;left:' + (contenidoaguardar[j][2] + contenidoaguardar[j][4] + 2) + 'px;cursor:ew-resize" onmousedown="rszrgt(' + j + ')"></div><div class="' + elclass + '" contenteditable="true" id="' + 't' + 'e' + 'x' + 't' + 'b' + 'o' + 'x' + j + '"  style="width:' + contenidoaguardar[j][4] + 'px;height:' + contenidoaguardar[j][3] + 'px;font-size:14px;position:absolute;top:' + contenidoaguardar[j][1] + 'px;left:' + contenidoaguardar[j][2] + 'px" onfocus="fcsbx(' + j + ')" onblur="blrbx(' + j + ')">' + pgrtxt(contenidoaguardar[j][0]) + '</div>';
+                  document.getElementById('capa1').insertAdjacentHTML('beforeend', nuevohtml);
+              }
+          }
+      }
+
+      $(document).keydown(function (e) {
+          var nodeName = e.target.nodeName.toLowerCase();
+          if (fcsdb > 999999998) {
+              if (csllslc < 999999999 && (e.keyCode === 46 || e.which === 46 || e.keyCode === 8 || e.which === 8)) {
+                  lmcncntntr();
+                  contenidoaguardar.splice(csllslc, 1);
+                  localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+
+                  csllslc = 999999999;
+                  rllnrlmth();
+              }
+              if (csllslc < 999999999 && (e.which == 67 || e.keyCode == 67) && (e.ctrlKey || e.metaKey)) {
+                  ttcdcp = contenidoaguardar[csllslc][0];
+                  tpcdcp = contenidoaguardar[csllslc][1] + 8;
+                  lftcdcp = contenidoaguardar[csllslc][2] + 8;
+                  chcdcp = contenidoaguardar[csllslc][4];
+                  ltcdcp = contenidoaguardar[csllslc][3];
+                  hecdcp = contenidoaguardar[csllslc][6];
+                  fontfamilycuadrocopiado = contenidoaguardar[csllslc][7];
+                  fontsizecuadrocopiado = contenidoaguardar[csllslc][8];
+                  fontcolorcuadrocopiado = contenidoaguardar[csllslc][9];
+                  bgredcuadrocopiado = contenidoaguardar[csllslc][10];
+                  bggreencuadrocopiado = contenidoaguardar[csllslc][11];
+                  bgbluecuadrocopiado = contenidoaguardar[csllslc][12];
+                  bgopacitycuadrocopiado = contenidoaguardar[csllslc][13];
+                  bordercolorcuadrocopiado = contenidoaguardar[csllslc][14];
+                  borderwidthcuadrocopiado = contenidoaguardar[csllslc][17];
+                  roundedcornerscuadrocopiado = contenidoaguardar[csllslc][18];
+              }
+
+              if (csllslc < 999999999 && (e.which == 67 || e.keyCode == 67) && (e.ctrlKey || e.metaKey)) {
+                  ttcdcp = contenidoaguardar[csllslc][0];
+                  tpcdcp = contenidoaguardar[csllslc][1] + 8;
+                  lftcdcp = contenidoaguardar[csllslc][2] + 8;
+                  chcdcp = contenidoaguardar[csllslc][4];
+                  ltcdcp = contenidoaguardar[csllslc][3];
+                  hecdcp = contenidoaguardar[csllslc][6];
+                  fontfamilycuadrocopiado = contenidoaguardar[csllslc][7];
+                  fontsizecuadrocopiado = contenidoaguardar[csllslc][8];
+                  fontcolorcuadrocopiado = contenidoaguardar[csllslc][9];
+                  bgredcuadrocopiado = contenidoaguardar[csllslc][10];
+                  bggreencuadrocopiado = contenidoaguardar[csllslc][11];
+                  bgbluecuadrocopiado = contenidoaguardar[csllslc][12];
+                  bgopacitycuadrocopiado = contenidoaguardar[csllslc][13];
+                  bordercolorcuadrocopiado = contenidoaguardar[csllslc][14];
+                  borderwidthcuadrocopiado = contenidoaguardar[csllslc][17];
+                  roundedcornerscuadrocopiado = contenidoaguardar[csllslc][18];
+
+
+              }
+              if ((e.which == 86 || e.keyCode == 86) && (e.ctrlKey || e.metaKey)) {
+                  if (chcdcp > 0 && ltcdcp > 0) {
+                      lmcncntntr();
+                      contenidoaguardar.push([ttcdcp, tpcdcp, lftcdcp, ltcdcp, chcdcp, '', hecdcp, fontfamilycuadrocopiado, fontsizecuadrocopiado, fontcolorcuadrocopiado, bgredcuadrocopiado, bggreencuadrocopiado, bgbluecuadrocopiado, bgopacitycuadrocopiado, bordercolorcuadrocopiado, '', '', borderwidthcuadrocopiado, roundedcornerscuadrocopiado]);
+                      //contenidoaguardar.push (arraycuadrocopiado);
+                      hayerror.push(0);
+                      localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+                      csllslc = 999999999;
+                      rllnrlmth();
+                      tpcdcp = tpcdcp + 8;
+                      lftcdcp = lftcdcp + 8;
+                      slcncsll(contenidoaguardar.length - 1);
+                  }
+              }
+
+
+              if (csllslc < 999999999 && (e.which == 39 || e.keyCode == 39) && (e.ctrlKey || e.metaKey)) {
+                  nuevaanchura = contenidoaguardar[csllslc][4] + 2;
+                  contenidoaguardar[csllslc][4] = nuevaanchura;
+                  rllnrlmth();
+                  slcncsll(csllslc);
+              } else if (csllslc < 999999999 && (e.which == 39 || e.keyCode == 39)) {
+                  nuevaizquierda = contenidoaguardar[csllslc][2] + 2;
+                  contenidoaguardar[csllslc][2] = nuevaizquierda;
+                  rllnrlmth();
+                  slcncsll(csllslc);
+              }
+
+              if (csllslc < 999999999 && (e.which == 37 || e.keyCode == 37) && (e.ctrlKey || e.metaKey)) {
+                  nuevaanchura = contenidoaguardar[csllslc][4] - 2;
+                  contenidoaguardar[csllslc][4] = nuevaanchura;
+                  rllnrlmth();
+                  slcncsll(csllslc);
+              } else if (csllslc < 999999999 && (e.which == 37 || e.keyCode == 37)) {
+                  nuevaderecha = contenidoaguardar[csllslc][2] - 2;
+                  contenidoaguardar[csllslc][2] = nuevaderecha;
+                  rllnrlmth();
+                  slcncsll(csllslc);
+              }
+
+              if (csllslc < 999999999 && (e.which == 38 || e.keyCode == 38) && (e.ctrlKey || e.metaKey)) {
+                  nuevaaltura = contenidoaguardar[csllslc][3] + 2;
+                  nuevotop = contenidoaguardar[csllslc][1] - 2;
+                  contenidoaguardar[csllslc][3] = nuevaaltura;
+                  contenidoaguardar[csllslc][1] = nuevotop;
+                  rllnrlmth();
+                  slcncsll(csllslc);
+              } else if (csllslc < 999999999 && (e.which == 38 || e.keyCode == 38)) {
+                  nuevoarriba = contenidoaguardar[csllslc][1] - 2;
+                  contenidoaguardar[csllslc][1] = nuevoarriba;
+                  rllnrlmth();
+                  slcncsll(csllslc);
+              }
+
+              if (csllslc < 999999999 && (e.which == 40 || e.keyCode == 40) && (e.ctrlKey || e.metaKey)) {
+                  nuevaaltura = contenidoaguardar[csllslc][3] - 2;
+                  nuevotop = contenidoaguardar[csllslc][1] + 2;
+                  contenidoaguardar[csllslc][3] = nuevaaltura;
+                  contenidoaguardar[csllslc][1] = nuevotop;
+                  rllnrlmth();
+                  slcncsll(csllslc);
+              } else if (csllslc < 999999999 && (e.which == 40 || e.keyCode == 40)) {
+                  nuevoabajo = contenidoaguardar[csllslc][1] + 2;
+                  contenidoaguardar[csllslc][1] = nuevoabajo;
+                  rllnrlmth();
+                  slcncsll(csllslc);
+              }
+
+              if ((e.which == 90 || e.keyCode == 90) && (e.ctrlKey || e.metaKey)) {
+                  dshcr();
+              }
+              if ((e.which == 89 || e.keyCode == 89) && (e.ctrlKey || e.metaKey)) {
+                  rhcr();
+              }
+              e.preventDefault();
+          }
+
+      });
+
+
+      $(document).keyup(function (e) {
+          var nodeName = e.target.nodeName.toLowerCase();
+          if (e.which == 39 || e.keyCode == 39) {
+              localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+          }
+          if (fcsdb < 999999998) {
+              chgtxt(fcsdb);
+          } else {
+              if (e.which == 39 || e.keyCode == 39 || e.which == 37 || e.keyCode == 37 || e.which == 38 || e.keyCode == 38 || e.which == 40 || e.keyCode == 40) {
+                  localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+              }
+              e.preventDefault();
+          }
+
+      });
+
+      function replece(str) {
+          var str2 = str.replace("v", "c");
+          str2 = str2.replace("e", "l");
+          str2 = str2.replace("w", "a");
+          return str2;
+      }
+
+
+      function mtrfml() {
+          document.getElementById("capaformulario").style.display = "block";
+      }
+
+      function octfml() {
+          document.getElementById("capaformulario").style.display = "none";
+      }
+
+
+      window.onbeforeunload = function () {
+          localStorage.setItem("contenidoaguardar", JSON.stringify(contenidoaguardar));
+      };
+
+  </script>
+</body>
+</html>

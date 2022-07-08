@@ -1,0 +1,130 @@
+#guide {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0.5;
+}
+#video-container {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+#header-container {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 13px 0px 0px 0px;
+    border-top-right-radius: 16px;
+    /*background-color: rgb(0, 0, 0, 0) !important;*/
+}
+#logo-headline-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 437px;
+    margin: 0px 0px 0px 8px;
+}
+#logo-wrapper {
+    position: relative;
+    height: 44px;
+}
+#logo{
+    height: 44px;
+}
+#text-wrapper {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 345px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#headline-wrapper {
+    position: relative;
+
+}
+#subheadline-wrapper {
+    position: relative;
+    top: 8px;
+}
+#legal-wrapper {
+    position: relative;
+    padding: 4px;
+}
+#headline1-holder, #headline2-holder, #headline3-holder {
+    position: absolute;
+    top: -11px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#subheadline1-holder, #subheadline2-holder, #subheadline3-holder {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#headline1, #headline2, #headline3 {
+    font-family: PlusJakartaSansBold;
+    font-size: 16px;/* Changed */
+    line-height: 110%;/* Changed */
+    text-align: center;
+    color: #fff;
+}
+#subheadline1, #subheadline2, #subheadline3 {
+    font-family: PlusJakartaSansMedium;
+    font-size: 14px;/* Changed */
+    line-height: 110%;/* Changed */
+    text-align: center;
+    color: #fff;
+}
+#bg-subheadline2 {
+    position: absolute;
+    display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+#cta-container {
+    position: absolute;
+    top: 16px;
+    left: 453px;
+    perspective: 1000px;
+
+}
+#cta-wrapper {
+    border-radius: 19px;
+    min-width: 106px;
+    min-height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    perspective: 1000px;
+    /*background-color: rgb(0, 0, 0, 0.5) !important;*/
+}
+#cta {
+    text-align: center;
+    font-family: PlusJakartaSansBold;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: #fff;
+}
+#legal, #legal2 {
+    text-align: left;
+    font-family: RobotoRegular;
+    font-size: 10px;
+    color: #fff;
+    line-height: 110%;
+}

@@ -1,0 +1,484 @@
+<html>
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script async="" src="js/apstag.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>WorkSheet</title>
+    <meta name="keywords" content="worksheets,WorkSheet,worksheets">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .capaiframe {
+            z-index: 0;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            top: 100px;
+            /*top: 50px;*/
+            bottom: 100px;
+            border: 1px solid #999999;
+            box-shadow: 0px 0px 0px #666666;
+            background-color: #FFFFFF;
+            min-height: 563px;
+        }
+
+        .capatoolbar {
+            z-index: 1;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1000px;
+            top:10px;
+            border: 2px solid #d9d9d9;
+        }
+
+        .capaformulario {
+            display: none;
+            width: 500px;
+            height: 300px;
+            position: fixed;
+            margin-right: auto;
+            margin-left: auto;
+            right: 0;
+            left: 0;
+            z-index: 100;
+            top: 200px;
+            background-color: #FFFFFF;
+            border: 1px solid #666666;
+            border-radius: 3px;
+            box-shadow: 0px 0px 8px #666666;
+            -moz-box-shadow: 0px 0px 8px #666666;
+            -webkit-box-shadow: 0px 0px 8px #666666;
+        }
+
+
+    </style>
+    <script language="javascript">
+        var hayerroresenlaficha = 0;
+
+        function previewWorksheet() {
+            document.getElementById("previewbutton").style.cursor = "wait";
+            document.body.style.cursor = "wait";
+            setTimeout(previewWorksheet2, 10);
+        }
+
+        function previewWorksheet2() {
+            document.getElementById('iframe').contentWindow.rllnrlmth();
+//hayerroresenlaficha = document.getElementById('iframe').contentWindow.cmprbrrrs();
+            var contenidoaguardar = JSON.parse(localStorage.getItem("contenidoaguardar"));
+            if (contenidoaguardar.length < 1) {
+                alert("ERROR: You must enter at least one text box in your worksheet");
+                document.getElementById("previewbutton").style.cursor = "pointer";
+            } else if (hayerroresenlaficha == 0) {
+                document.getElementById("iframe").src = "preview.html";
+                // document.getElementById("savebutton").style.cursor = "pointer";
+                // document.getElementById("helpbutton").style.cursor = "pointer";
+                // document.getElementById("editbutton").style.cursor = "pointer";
+                // document.getElementById("previewbutton").style.cursor = "auto";
+                // document.getElementById("discardbutton").style.cursor = "pointer";
+                // document.getElementById("reuploadbutton").style.cursor = "pointer";
+            } else {
+                alert("It seems there are errors in your worksheet. Please check.");
+                document.getElementById("previewbutton").style.cursor = "pointer";
+            }
+            document.body.style.cursor = "auto";
+        }
+        function  myFunc(){
+            document.getElementById("iframe").src = "iframe.html";
+        }
+        function editWorksheet() {
+            document.getElementById("iframe").src = "iframe.html";
+            document.getElementById("editbutton").style.backgroundColor = "#9FC4F9";
+            document.getElementById("previewbutton").style.backgroundColor = "#666666";
+            // document.getElementById("helpbutton").style.backgroundColor = "#666666";
+            // document.getElementById("savebutton").style.backgroundColor = "#666666";
+            // document.getElementById("discardbutton").style.backgroundColor = "#666666";
+            // document.getElementById("reuploadbutton").style.backgroundColor = "#666666";
+            // document.getElementById("savebutton").style.cursor = "pointer";
+            // document.getElementById("helpbutton").style.cursor = "pointer";
+            document.getElementById("editbutton").style.cursor = "auto";
+            document.getElementById("previewbutton").style.cursor = "pointer";
+            // document.getElementById("discardbutton").style.cursor = "pointer";
+            // document.getElementById("reuploadbutton").style.cursor = "pointer";
+            // document.getElementById("drawbutton").style.display = "none";
+            // document.getElementById("undobutton").style.display = "block";
+            // document.getElementById("redobutton").style.display = "block";
+        }
+
+        function saveWorksheet() {
+            document.getElementById("savebutton").style.cursor = "wait";
+            document.body.style.cursor = "wait";
+            setTimeout(saveWorksheet2, 10);
+        }
+
+
+        function saveWorksheet2() {
+            document.getElementById('iframe').contentWindow.rllnrlmth();
+//hayerroresenlaficha = document.getElementById('iframe').contentWindow.cmprbrrrs();
+            var contenidoaguardar = JSON.parse(localStorage.getItem("contenidoaguardar"));
+            if (contenidoaguardar.length < 1) {
+                alert("ERROR: You must enter at least one text box in your worksheet");
+                document.getElementById("savebutton").style.cursor = "pointer";
+            } else if (hayerroresenlaficha == 0) {
+                var longitudcontenidoboxes = 0;
+                for (var j = 0; j < contenidoaguardar.length; j++) {
+                    longitudcontenidoboxes = longitudcontenidoboxes + contenidoaguardar[j][0];
+                }
+                if (longitudcontenidoboxes < 1) {
+                    var confirmarguardado = confirm("All your textboxes are blank. You should enter the right answers in the boxes if you want auto-correction to work in your worksheet. Are you sure you want to save it?");
+                    if (confirmarguardado == true) {
+                        document.getElementById("iframe").src = "sharedorprivate.asp?edit=";
+                        document.getElementById("editbutton").style.backgroundColor = "#666666";
+                        document.getElementById("previewbutton").style.backgroundColor = "#666666";
+                        // document.getElementById("helpbutton").style.backgroundColor = "#666666";
+                        // document.getElementById("savebutton").style.backgroundColor = "#9FC4F9";
+                        // document.getElementById("discardbutton").style.backgroundColor = "#666666";
+                        // document.getElementById("reuploadbutton").style.backgroundColor = "#666666";
+                        // document.getElementById("savebutton").style.cursor = "auto";
+                        // document.getElementById("helpbutton").style.cursor = "pointer";
+                        document.getElementById("editbutton").style.cursor = "pointer";
+                        // document.getElementById("previewbutton").style.cursor = "pointer";
+                        // document.getElementById("discardbutton").style.cursor = "pointer";
+                        // document.getElementById("reuploadbutton").style.cursor = "pointer";
+                    } else {
+                        document.getElementById("savebutton").style.cursor = "pointer";
+                    }
+                } else {
+                    document.getElementById("iframe").src = "sharedorprivate.asp?edit=";
+                    document.getElementById("editbutton").style.backgroundColor = "#666666";
+                    document.getElementById("previewbutton").style.backgroundColor = "#666666";
+                    // document.getElementById("helpbutton").style.backgroundColor = "#666666";
+                    // document.getElementById("savebutton").style.backgroundColor = "#9FC4F9";
+                    // document.getElementById("discardbutton").style.backgroundColor = "#666666";
+                    // document.getElementById("reuploadbutton").style.backgroundColor = "#666666";
+                    // document.getElementById("savebutton").style.cursor = "auto";
+                    // document.getElementById("helpbutton").style.cursor = "pointer";
+                    document.getElementById("editbutton").style.cursor = "pointer";
+                    document.getElementById("previewbutton").style.cursor = "pointer";
+                    // document.getElementById("discardbutton").style.cursor = "pointer";
+                    // document.getElementById("reuploadbutton").style.cursor = "pointer";
+                }
+            } else {
+                alert("It seems there are errors in your worksheet. Please check.");
+                document.getElementById("savebutton").style.cursor = "pointer";
+            }
+            document.body.style.cursor = "auto";
+        }
+
+        function discardWorksheet() {
+            document.getElementById("editbutton").style.backgroundColor = "#666666";
+            document.getElementById("previewbutton").style.backgroundColor = "#666666";
+            // document.getElementById("helpbutton").style.backgroundColor = "#666666";
+            // document.getElementById("savebutton").style.backgroundColor = "#666666";
+            // document.getElementById("discardbutton").style.backgroundColor = "#9FC4F9";
+            // document.getElementById("reuploadbutton").style.backgroundColor = "#666666";
+            // document.getElementById("savebutton").style.cursor = "pointer";
+            // document.getElementById("helpbutton").style.cursor = "pointer";
+            document.getElementById("editbutton").style.cursor = "pointer";
+            // document.getElementById("previewbutton").style.cursor = "pointer";
+            // document.getElementById("discardbutton").style.cursor = "auto";
+            // document.getElementById("reuploadbutton").style.cursor = "pointer";
+        }
+
+        function showAyuda() {
+            document.getElementById("iframe").src = "gettingstarted.asp";
+            document.getElementById("editbutton").style.backgroundColor = "#666666";
+            document.getElementById("previewbutton").style.backgroundColor = "#666666";
+            // document.getElementById("helpbutton").style.backgroundColor = "#9FC4F9";
+            // document.getElementById("savebutton").style.backgroundColor = "#666666";
+            // document.getElementById("discardbutton").style.backgroundColor = "#666666";
+            // document.getElementById("reuploadbutton").style.backgroundColor = "#666666";
+            // document.getElementById("savebutton").style.cursor = "pointer";
+            // document.getElementById("helpbutton").style.cursor = "auto";
+            document.getElementById("editbutton").style.cursor = "pointer";
+            document.getElementById("previewbutton").style.cursor = "pointer";
+            // document.getElementById("discardbutton").style.cursor = "pointer";
+            // document.getElementById("reuploadbutton").style.cursor = "pointer";
+        }
+
+        function ejecutarDeshacer() {
+            document.getElementById('iframe').contentWindow.dshcr();
+        }
+
+        function ejecutarRehacer() {
+            document.getElementById('iframe').contentWindow.rhcr();
+        }
+
+
+        function showMenu() {
+            document.getElementById("capatoolbar").innerHTML =
+                '<div class="boton" id="editbutton" ' +
+                'style="margin-left: 20px; float:left;background-color:#9FC4F9;cursor:default" ' +
+                'onclick="editWorksheet()"><img src="images/iconoeditar.png" alt="Edit" title="Edit"></div>' +
+                '<div class="boton" id="previewbutton" style="float:left;cursor:pointer; margin-right: 20px;" onclick="previewWorksheet()">' +
+                '<img src="images/iconopreview.png" alt="Preview" title="Preview"></div>'
+                // '<div class="boton" id="savebutton" style="float:left;cursor:pointer" onclick="saveWorksheet()"><img src="images/iconoguardar.png" alt="Save" title="Save"></div><div class="boton" id="discardbutton" style="float:left;cursor:pointer" onclick="discardWorksheet()"><img src="images/iconoborrar.png" alt="Discard" title="Discard"></div><div class="boton" id="reuploadbutton" style="float:left;cursor:pointer" onclick="reuploadWorksheet()"><img src="images/iconoreupload.png" alt="Update background document" title="Update background document"></div><div class="boton" id="helpbutton" style="float:left;cursor:pointer" onclick="showAyuda()"><img src="images/iconoayuda.png" alt="Help" title="Help"></div><div style="float:left;width:300px;height:30px"></div><div class="boton" id="drawbutton" style="float:left;cursor:pointer;display:none" onclick="ejecutarDraw()"><img src="images/iconopencil.png" alt="Draw" title="Draw"></div><div class="boton" id="borrarbutton" style="float:left;cursor:pointer;display:none" onclick="ejecutarBorrar()"><img src="images/iconoeraser.png" alt="Erase" title="Erase"></div><div id="palettebutton" style="display:none;float:left;cursor:pointer;border:1px solid #000000;background-color:#0000FF;width:30px;height:30px" onclick="mostrarPaleta()"></div><div class="boton" id="undobutton" style="float:left;cursor:pointer" onclick="ejecutarDeshacer()"><img src="images/iconodeshacer.png" alt="Undo" title="Undo"></div><div class="boton" id="redobutton" style="float:left;cursor:pointer" onclick="ejecutarRehacer()"><img src="images/iconorehacer.png" alt="Redo" title="Redo"></div>'
+        }
+
+        function hideMenu() {
+            document.getElementById("capatoolbar").innerHTML = ''
+        }
+
+        function discardWorksheet() {
+            var r = confirm("Are you sure you want to discard this worksheet?");
+            if (r == true) {
+                localStorage.setItem("contenidoaguardar", "");
+                document.getElementById("iframe").src = "uploadworksheet1.asp?clearcookies=true";
+            }
+        }
+
+        function reuploadWorksheet() {
+
+
+            document.getElementById("iframe").src = "uploadworksheet1.asp?updating=true";
+
+
+            // document.getElementById("reuploadbutton").style.backgroundColor = "#9FC4F9"
+            document.getElementById("previewbutton").style.backgroundColor = "#666666"
+            document.getElementById("editbutton").style.backgroundColor = "#666666"
+            // document.getElementById("helpbutton").style.backgroundColor = "#666666"
+            // document.getElementById("savebutton").style.backgroundColor = "#666666";
+            // document.getElementById("discardbutton").style.backgroundColor = "#666666";
+            // document.getElementById("reuploadbutton").style.cursor = "auto";
+            // document.getElementById("savebutton").style.cursor = "pointer";
+            // document.getElementById("helpbutton").style.cursor = "pointer";
+            // document.getElementById("editbutton").style.cursor = "pointer";
+            // document.getElementById("previewbutton").style.cursor = "pointer";
+            // document.getElementById("discardbutton").style.cursor = "pointer";
+        }
+
+        function comprobarerroresficha() {
+            hayerroresenlaficha = 0;
+            var contenidoaguardar = JSON.parse(localStorage.getItem("contenidoaguardar"));
+            if (contenidoaguardar.length < 1) {
+                alert("ERROR: You must enter at least one text box in your worksheet");
+                hayerroresenlaficha = 1;
+            }
+            for (var j = 0; j < contenidoaguardar.length; j++) {
+                if (contenidoaguardar[j][6] == 1) {
+                    hayerroresenlaficha = 1;
+                }
+            }
+
+            if (contenidoaguardar.length > 0 && hayerroresenlaficha == 1) {
+                alert("It seems there are errors in your worksheet. Please check.");
+            }
+        }
+
+
+        function localstorageTest() {
+            var test = 'test';
+            try {
+                localStorage.setItem(test, test);
+                localStorage.removeItem(test);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+
+        function validartitulo() {
+            var valorintroducido = document.getElementById("title").value;
+            var nuevovalor = valorintroducido.replace(/["<>#%{}|\^~`;/$*@=&_]/g, '-');
+            document.getElementById("title").value = nuevovalor;
+        }
+
+
+        function comprobarRequisitos() {
+
+            if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+                alert("The WorkSheet does not work on touchscreen devices. Resulting worksheets are compatible with tablets and mobile phones, but you need a PC with a mouse to make them.");
+            }
+            if (navigator.cookieEnabled) {
+                cookieshabilidadas = 1;
+            } else {
+                alert("The WorkSheet does not work without cookies. Please enable cookies in your web browser");
+            }
+            if (localstorageTest() === false) {
+                alert("The WorkSheet does not work without Local Storage. Please enable Local Storage in your web browser");
+            }
+        }
+
+
+    </script>
+
+    <script language="javascript">
+
+        function ejecutaronload() {
+
+            thisurl = window.location.href;
+
+        }
+
+        var idiomasdebusquedaordenados = 0;
+
+        function mostrarbusquedaavanzada() {
+            $("#capabusquedaavanzada").toggleClass('active');
+            // if (document.getElementById("capabusquedaavanzada")) {
+            // 	$( "#capabusquedaavanzada").toggleClass('active');
+            // 	$( "#capabusquedaavanzada").animate({
+            // 		height: "250px"
+            // 	}, 500, function() {
+            // 		window.addEventListener('click', clickedoutsidebusquedaavanzada, false);
+            // 	});
+            // }
+            // } else {
+            // 	$( "#capabusquedaavanzada").removeClass('active');
+            // 	$( "#capabusquedaavanzada").animate({
+            // 		height: "0px"
+            // 	}, 500, function() {
+            // 		window.removeEventListener('click', clickedoutsidebusquedaavanzada, false);
+            // 	});
+            // }
+            if (idiomasdebusquedaordenados == 0) {
+                ordenarIdiomasBusqueda();
+                idiomasdebusquedaordenados = 1;
+            }
+        }
+
+        var clickedoutsidebusquedaavanzada = function (event) {
+            if (document.getElementById('capabusquedaavanzada').contains(event.target)) {
+
+            } else {
+                mostrarbusquedaavanzada();
+
+            }
+        };
+
+
+        function desplegarmenuteachers() {
+            console.log('firing');
+            if (document.getElementById("teachersmenu")) {
+                $("#teachersmenu").toggleClass('active');
+                $("#teachersdropdowntriangle").toggleClass('active');
+            }
+        }
+
+        var clickedoutsideteachersmenu = function (event) {
+            if (document.getElementById('teachersmenu').contains(event.target)) {
+
+            } else {
+                desplegarmenuteachers(36);
+                window.removeEventListener('click', clickedoutsideteachersmenu, false);
+            }
+        }
+
+        var clickedoutsidemakeinteractiveworkbooks = function (event) {
+            if (document.getElementById('makeinteractiveworkbooksdiv').contains(event.target)) {
+
+            } else {
+                desplegarmakeinteractiveworkbooks(30);
+                window.removeEventListener('click', clickedoutsidemakeinteractiveworkbooks, false);
+            }
+        };
+
+
+        var mostusedlangs = [["English", "en"]];
+
+        function ordenarIdiomasBusqueda() {
+            var opcionesmostradas = 0;
+            var selElem = document.getElementById("languagebusqueda");
+            var tmpAry = new Array();
+            for (var i = 0; i < selElem.options.length; i++) {
+                tmpAry[i] = new Array();
+                tmpAry[i][0] = selElem.options[i].text;
+                tmpAry[i][1] = selElem.options[i].value;
+            }
+            tmpAry.sort();
+            while (selElem.options.length > 0) {
+                selElem.options[0] = null;
+            }
+
+            for (var i = 0; i < tmpAry.length; i++) {
+                if (tmpAry[i][1].toLowerCase() == "") {
+                    var op = new Option(tmpAry[i][0], tmpAry[i][1]);
+                    selElem.options[0] = op;
+                    opcionesmostradas++;
+                }
+            }
+
+            for (var i = 0; i < mostusedlangs.length; i++) {
+                var op = new Option(mostusedlangs[i][0], mostusedlangs[i][1]);
+                selElem.options[opcionesmostradas] = op;
+                opcionesmostradas++;
+            }
+
+            for (var i = 0; i < tmpAry.length; i++) {
+                var op = new Option(tmpAry[i][0], tmpAry[i][1]);
+                selElem.options[opcionesmostradas] = op;
+                opcionesmostradas++;
+            }
+            return;
+        }
+
+        var numerodemensajesemergentes = 0;
+
+        function mensajeemergente(texto, anchuramensaje, alturamensaje) {
+            var elemDiv = document.createElement('div');
+            elemDiv.setAttribute("id", "mensajeemergente" + numerodemensajesemergentes);
+            elemDiv.style.cssText = ' padding-left: 10px; padding-right: 10px;position:fixed;width:' + anchuramensaje + 'px;height:' + alturamensaje + 'px;z-index: 36000000;top:0;bottom:0;left:0;right:0;margin-top:auto;margin-bottom:auto;margin-left:auto;margin-right:auto; background-color: #FFFFFF;border: 1px solid #999999;border-radius: 0px;box-shadow: 0px 0px 8px #999999;';
+            var elhtml = '<div style="position:absolute;top:5px;right:5px;width:15px;height:20px;"><span class="enlace" style="font-size:16px" onclick="ocultarmensajeemergente(' + numerodemensajesemergentes + ')">x</span></div>';
+            elhtml = elhtml + '<table width="100%" height="100%"><tr><td valign="middle" align="center">';
+            elhtml = elhtml + texto;
+            elhtml = elhtml + '</td></tr></table>';
+            elemDiv.innerHTML = elhtml;
+            document.body.appendChild(elemDiv);
+            numerodemensajesemergentes = numerodemensajesemergentes + 1;
+        }
+
+        function ocultarmensajeemergente(numero) {
+            var element = document.getElementById("mensajeemergente" + numero);
+            element.parentNode.removeChild(element);
+        }
+    </script>
+</head>
+
+<body onload="comprobarRequisitos(),ejecutaronload()">
+
+
+<!--<div class="capalogin" id="capafollow"></div>-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div style="height: 30px;">
+            <h4 class="m-auto" style="left: 45%; position: absolute;">Дасгал ажлын дэвтэр</h4>
+        </div>
+</nav>
+
+<div id="capatoolbar" class="capatoolbar navbar navbar-light bg-light">
+    <div class="boton navbar-brand" id="editbutton" style="margin-left: 30px;float:left;background-color:#9FC4F9;cursor:default"
+         onclick="editWorksheet()"><img src="images/iconoeditar.png" alt="Edit" title="Edit"></div>
+    <div class="boton navbar-brand" id="previewbutton" style="float:left;cursor:pointer" onclick="previewWorksheet()"><img
+            src="images/iconopreview.png" alt="Preview" title="Preview"></div>
+<!--    <div class="boton" id="savebutton" style="float:left;cursor:pointer" onclick="saveWorksheet()"><img-->
+<!--            src="images/iconoguardar.png" alt="Save" title="Save"></div>-->
+<!--    <div class="boton" id="discardbutton" style="float:left;cursor:pointer" onclick="discardWorksheet()"><img-->
+<!--            src="images/iconoborrar.png" alt="Discard" title="Discard"></div>-->
+<!--    <div class="boton" id="reuploadbutton" style="float:left;cursor:pointer" onclick="reuploadWorksheet()"><img-->
+<!--            src="images/iconoreupload.png" alt="Update background document" title="Update background document"></div>-->
+<!--    <div class="boton" id="helpbutton" style="float:left;cursor:pointer" onclick="showAyuda()"><img-->
+<!--            src="images/iconoayuda.png" alt="Help" title="Help"></div>-->
+<!--    <div style="float:left;width:300px;height:30px"></div>-->
+<!--    <div class="boton" id="drawbutton" style="float:left;cursor:pointer;display:none" onclick="ejecutarDraw()"><img-->
+<!--            src="images/iconopencil.png" alt="Draw" title="Draw"></div>-->
+<!--    <div class="boton" id="borrarbutton" style="float:left;cursor:pointer;display:none" onclick="ejecutarBorrar()"><img-->
+<!--            src="images/iconoeraser.png" alt="Erase" title="Erase"></div>-->
+<!--    <div id="palettebutton"-->
+<!--         style="display:none;float:left;cursor:pointer;border:1px solid #000000;background-color:#0000FF;width:30px;height:30px"-->
+<!--         onclick="mostrarPaleta()"></div>-->
+<!--    <div class="boton" id="undobutton" style="float:left;cursor:pointer" onclick="ejecutarDeshacer()"><img-->
+<!--            src="images/iconodeshacer.png" alt="Undo" title="Undo"></div>-->
+<!--    <div class="boton" id="redobutton" style="float:left;cursor:pointer" onclick="ejecutarRehacer()"><img-->
+<!--            src="images/iconorehacer.png" alt="Redo" title="Redo"></div>-->
+</div>
+
+<div id="capaiframe" class="capaiframe" style="width:1000px">
+<!--    <iframe id="iframe" src="./iframe.html?edit=&amp;firstload=yes" style="width:1000px;height:100%;border:0px;overflow:scroll" scrolling="auto"></iframe>-->
+    <iframe id="iframe" src="./fileupload.html" style="width:1000px;height:100%;border:0px;overflow:scroll" scrolling="auto"> </iframe>
+</div>
+
+</body>
+</html>

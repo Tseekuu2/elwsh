@@ -1,0 +1,33 @@
+{
+  "name": "webproject",
+  "version": "1.0.0",
+  "main": "js/test.js",
+  "type": "commonjs",
+  "scripts": {
+    "server": "webpack-dashboard -- webpack-dev-server --inline --port 8089",
+    "webdriver-update": "webdriver-manager update",
+    "start:dev": "nodemon js/test.js",
+    "start": "node js/test.js",
+    "test:lint:stylelint": "stylelint \"layouts/css/**/*.{css,scss}\" --cache --cache-location .cache/.stylelintcache --report-needless-disables"
+  },
+  "dependencies": {
+    "jquery": "^3.6.0"
+  },
+  "devDependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16",
+    "webpack-dashboard": "^3.3.7"
+  },
+  "files": [
+    "LICENSE",
+    "History.md",
+    "Readme.md",
+    "css/bootstrap.min.css",
+    "dom/",
+    "util/"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
